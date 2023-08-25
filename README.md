@@ -4,19 +4,33 @@ This is Project to fetch Data from Spotify Api
 Token: It is provided by spotify By using Authorization link
 
 const [Token, setToken] = useState("")
+
 const Client_ID = "";
+
 const Redirect = "http://localhost:3000/";
+
 const End_P = "https://accounts.spotify.com/authorize";
+
 const Resp_T = "token";
+
 useEffect(() => {
+
 const hash = window.location.hash;
+
 let token = window.localStorage.getItem("token")
+
 if (!token && hash) {
+
 token = hash.substring(1).split("&").find((ele) => ele.startsWith("access_token")).split("=")[1];
+
 window.localStorage.setItem("token", token);
+
 }
+
 setToken(token)
+
   }, [])
+  
 
 Login href 
 
