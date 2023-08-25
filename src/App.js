@@ -2,13 +2,13 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import Spotify from './Components/Spotify';
-
+import Navbar from './Components/Navbar';
+import axios from 'axios';
 function App() {
+
+  const [Input, setInput] = useState("")
   const [Token, setToken] = useState("")
-  const Client_ID = "e70d95578b724f8d8b628db5d28333a8";
-  const Redirect = "http://localhost:3000/";
-  const End_P = "https://accounts.spotify.com/authorize";
-  const Resp_T = "token";
+  const [Data, setData] = useState([])
   useEffect(() => {
     const hash = window.location.hash;
     let token = window.localStorage.getItem("token")
@@ -16,39 +16,58 @@ function App() {
       token = hash.substring(1).split("&").find((ele) => ele.startsWith("access_token")).split("=")[1];
       window.localStorage.setItem("token", token);
     }
-      setToken(token)
+    setToken(token)
   }, [])
 
-
+  const Inputd = (e) => {
+    let type = e.target.value;
+    setInput(type);
+  }
 
   const Logout = () => {
     window.localStorage.removeItem("token")
     setToken("")
+    window.location=("http://localhost:3000/")
   }
-
+  const fetched = async (e) => {
+    e.preventDefault();
+    if (Input === "") {
+      setData([]);
+      return 0;
+    }
+    const dat = await axios.get("https://api.spotify.com/v1/search", {
+      headers: {
+        Authorization: `Bearer ${Token}`
+      },
+      params: {
+        q: Input,
+        type: "artist,album,playlist,track,show,episode,audiobook",
+        limit: 8,
+      }
+    }).catch((e) => {
+      console.log("Error" + e)
+    })
+    try {
+      setData(dat.data.albums.items)
+    } catch (error) {
+      console.log("Data Fetched But Items not in object")
+    }
+  }
   return (
-    <div className="container text-center text-light">
-      {!Token ?
-        <>
-          <h1 className='my-5'>Spotify Login</h1>
-          <a
-            className="btn btn-primary"
-            href={`${End_P}?client_id=${Client_ID}&redirect_uri=${Redirect}&response_type=${Resp_T}`}
-          > Login
-          </a>
 
-        </>
+    <>
+      <Navbar Token={Token} Inputd={Inputd} fetched={fetched} Logout={Logout} />
+      <div className="container text-center text-light">
+        {!Token ?
+          <>
+            <h1 className='my-5'>Login to Search on Spotify</h1>
+          </>
+          : <>
+            <Spotify Data={Data} Input={Input} />
+          </>}
 
-        : <>
-          <h3 className=' my-5 text-light'>
-            Search Song by Name of Artists
-            <button className='btn btn-primary my-5 float-end' onClick={() => { Logout() }}>Logout</button>
-            </h3>
-          <Spotify Token={Token} />
-          <button className='btn btn-primary my-5' onClick={() => { Logout() }}>Logout</button>
-        </>}
-
-    </div>
+      </div>
+    </>
   );
 }
 
