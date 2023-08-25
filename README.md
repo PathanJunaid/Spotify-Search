@@ -4,7 +4,7 @@ This is Project to fetch Data from Spotify Api
 Token: It is provided by spotify By using Authorization link
 
 const [Token, setToken] = useState("")
-const Client_ID = "e70d95578b724f8d8b628db5d28333a8";
+const Client_ID = "";
 const Redirect = "http://localhost:3000/";
 const End_P = "https://accounts.spotify.com/authorize";
 const Resp_T = "token";
