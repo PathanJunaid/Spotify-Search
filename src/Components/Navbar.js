@@ -23,8 +23,7 @@ const Navbar = ({ Token, Inputd, fetched, Logout }) => {
                             :
                             <>
                                 <div className="d-flex justify-content-center w-75">
-                                    <input type="text" className="form-control w-50 text-center" onChange={(e) => { Inputd(e) }} placeholder='Enter Artists Name' />
-                                    <button className="btn btn-outline-success ms-2" type="submit" onClick={(e) => { Inputd ? fetched(e) : console.log("Enter Something") }}>Search</button>
+                                    <input type="text" className="form-control w-50 text-center" onChange={(e) => { Inputd(e); fetched(e)}} placeholder='Enter Artists Name' />
                                 </div>
                                 <div className="d-flex me-5">
                                     <button className='btn btn-primary' onClick={() => { Logout() }}>Logout</button>
