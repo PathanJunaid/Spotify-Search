@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Spotify = ({Data,Input}) => {
+const Spotify = ({Data,Input,next,prev}) => {
     if(Input==="" ){
         return (
             <h3 className='my-4 text-light text-bolder'>Nothing to Search  </h3>
@@ -14,7 +14,7 @@ const Spotify = ({Data,Input}) => {
                 }
                 
                 <div className='container row justify-content-between align-items-center gy-4 text-dark'>
-                    {Data===""?<div className='text-light col-12'></div>:
+                    {Data==="" || Data[0]===null?<div className='text-light col-12'></div>:
                         Data.map((artist) => {
                             return (
 

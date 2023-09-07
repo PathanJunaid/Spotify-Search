@@ -1,10 +1,11 @@
 import React from 'react'
 
-const Navbar = ({ Token, Inputd, fetched, Logout }) => {
+const Navbar = ({ Token, Inputd, fetched, Logout ,filters}) => {
     const Client_ID = "e70d95578b724f8d8b628db5d28333a8";
     const Redirect = "http://localhost:3000/";
     const End_P = "https://accounts.spotify.com/authorize";
     const Resp_T = "token";
+    const placehold = `enter ${filters} name`;
     return (
         <>
             <nav className="navbar navbar-light py-3 bg-light">
@@ -23,7 +24,7 @@ const Navbar = ({ Token, Inputd, fetched, Logout }) => {
                             :
                             <>
                                 <div className="d-flex justify-content-center w-75">
-                                    <input type="text" className="form-control w-50 text-center" onChange={(e) => { Inputd(e); fetched(e)}} placeholder='Enter Artists Name' />
+                                    <input type="text" className="form-control w-50 text-center" onChange={(e) => { Inputd(e); fetched(e)}} placeholder={placehold} />
                                 </div>
                                 <div className="d-flex me-5">
                                     <button className='btn btn-primary' onClick={() => { Logout() }}>Logout</button>
